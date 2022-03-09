@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@400;600&family=Syne+Mono&family=Yeseva+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Syne Mono', monospace;
+        }
+
+        canvas {
+            background-image: url("https://www.artwall.ru/products/cartoon_1056/image?&width=400");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding: 0 50px 0 50px;
+        }
+
+        body {
+            background-image: url("https://img2.akspic.ru/originals/4/1/7/4/14714-tuman-fon-dymka-tekstura-atmosfera-1920x1080.jpg");
+            background-repeat: no-repeat;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            padding: 20px 0 20px;
+            font-size: 4em;
+            text-shadow: white 5px 5px 10px;
+        }
+
+        p {
+            padding: 10px 0 10px;
+            text-shadow: white 2px 2px 10px;
+        }
+
+        #result {
+            font-size: 1.5em;
+        }
+
+        #canvas {
+            margin: 20px 0 10px;
+        }
+
+        button {
+            font-size: 1.2em;
+            padding: 5px 10px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Hangman</h1>
+<p id="hello"></p>
+<p id="result">Your result</p>
+<canvas id="canvas" width="180" height="280"></canvas>
+<h2 id="word"></h2>
+<button id="button">Start the game!</button>
+<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+<script>
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var partOfGame = [[40, 260, 40, 40], [40, 40, 140, 40], [40, 80, 80, 40], [110, 40, 110, 80], [110, 105, 25, "stroke"], [110, 130, 110, 190], [110, 150, 80, 130], [110, 150, 140, 130], [110, 190, 80, 220], [110, 190, 140, 220]];
+
+
+    function drawPart(arrayIn) {
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(arrayIn[0], arrayIn[1]);
+        ctx.lineTo(arrayIn[2], arrayIn[3]);
+        ctx.stroke();
+    };
+
+    function drawHead(arrayHead) {
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.arc(arrayHead[0], arrayHead[1], arrayHead[2], 0, Math.PI * 2, false);
+        if (arrayHead[3] === "fill") {
+            ctx.fill();
+        } else if (arrayHead[3] === "stroke") {
+            ctx.stroke();
+        }
+    };
+
+    function draw () {
+        if (partOfGame.length - limitAnswer !== 4) {
+            drawPart(partOfGame[partOfGame.length - limitAnswer]);
+        } else if (partOfGame.length - limitAnswer === 4) {
+            drawHead(partOfGame[partOfGame.length - limitAnswer])
+        }
+    }
+
+    function randomWord(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    };
+
+    function setupUnswerArray(ruf) {
+        var end = [];
+        for (var j = 0; j < ruf.length; j++) {
+            end[j] = "_";
+        }
+        return end;
+    };
+    
+    function helloPhrase () {
+        $("#hello").text("Hi, " + name + "! Let's try to guess the word of " + word.length + " letters! You have " + limitAnswer + " attempts.");
+    };
+
+    function updateResult () {
+        $("#result").text("Your result: " + guessWord.join(" "));
+    };
+    
+    function setName () {
+        var nameOut = "";
+        while (nameOut === "" || nameOut === null)
+        nameOut = prompt("What is your name?")
+        return nameOut;
+    }
+
+    function playGame () {
+        $("#button").text("Try again!");
+        if (counterQuit === 0) {
+            addQuit();
+        }
+        if (counter < word.length && limitAnswer > 0) {
+            var answer = prompt("Input ONE letter of word.").toLowerCase();
+            if (answer.length !== 1) {
+                alert("Input only ONE letter!");
+                draw();
+                limitAnswer--;
+            } else {
+                for (var i = 0; i < word.length; i ++) {
+                    if (answer === word[i] && guessWord[i] === "_") {
+                        y++;
+                        counter++;
+                        guessWord[i] = answer;
+                    }
+                }
+                if (y === 0) {
+                    alert("You didn't guess the letter!");
+                    draw();
+                    limitAnswer--;
+                } else if (y === 1) {
+                    alert("Congratulation! You guessed " + y + " letter!");
+                } else if (y > 1) {
+                    alert("Congratulation! You guessed " + y + " letters!");
+                }
+            }
+            helloPhrase();
+            updateResult();
+            y = 0;
+            counterQuit++;
+            if (counter === word.length) {
+                alert("Congratulation! You are a WINNER!");
+                $("#button").text("You are a WINNER!");
+            }
+            if (limitAnswer === 0) {
+                alert("Game OVER!");
+                $("#button").text("Game OVER!");
+            }
+        } else if (counter === word.length) {
+            $("#button").text("You are a WINNER!");
+            alert("You are a winner, please restart the game!");
+        } else {
+            alert("Game over! I guessed - " + word);
+            $("#button").text("Game OVER!");
+        }
+    }
+
+    function addQuit () {
+        $("body").append('<button id="quit">Quit</button>');
+        $("#quit").click(quit);
+    }
+
+    function quit () {
+        for (var f = (partOfGame.length - limitAnswer); f < partOfGame.length; f++) {
+            draw();
+            limitAnswer--;
+        }
+        limitAnswer = 0;
+        playGame();
+    }
+
+    var words = ["word", "flex", "multiply", "frog"];
+    var word = randomWord(words);
+    var guessWord = setupUnswerArray(word);
+    var limitAnswer = partOfGame.length;
+    var counter = 0;
+    var name = setName();
+    var y = 0;
+    var counterQuit = 0;
+    helloPhrase();
+    updateResult();
+
+    $("#button").click(playGame);
+
+</script>
+</body>
+</html>

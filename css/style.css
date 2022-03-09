@@ -1,0 +1,42 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Syne Mono', monospace;
+}
+
+canvas {
+    background-image: url("https://s.ura.news/images/news/upload/news/461/907/1052461907/563588_ural_music_night_Ekaterinburg_massovoe_meropriyatie_publika_zriteli_tolpa_250x0_2000.1333.0.0.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+body {
+    background-image: url("https://img2.akspic.ru/originals/4/1/7/4/14714-tuman-fon-dymka-tekstura-atmosfera-1920x1080.jpg");
+    background-repeat: no-repeat;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    padding: 20px 0 20px;
+    font-size: 4em;
+}
+
+p {
+    padding: 10px 0 10px;
+}
+
+#result {
+    font-size: 1.5em;
+}
+
+#canvas {
+    margin: 20px 0 10px;
+}
+
+button {
+    font-size: 1.2em;
+    padding: 5px 10px;
+}

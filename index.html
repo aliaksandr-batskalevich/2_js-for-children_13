@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas-element</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillRect(50, 0, 50, 50);
+    ctx.fillRect(70, 50, 10, 20);
+    ctx.fillRect(0, 70, 150, 10);
+    ctx.fillRect(35, 80, 80, 80);
+    ctx.fillRect(35, 160, 10, 70);
+    ctx.fillRect(105, 160, 10, 70);
+
+    ctx.fillStyle = "deepPink";
+    ctx.fillRect(0, 230, 50, 100);
+    ctx.fillStyle = "darkGreen";
+    ctx.fillRect(50, 230, 50, 100);
+    ctx.fillStyle = "deepSkyBlue";
+    ctx.fillRect(100, 230, 50, 100);
+
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(0, 230, 150, 100);
+
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.moveTo(0, 330);
+    ctx.lineTo(150, 480);
+    ctx.moveTo(150, 330);
+    ctx.lineTo(0, 480);
+    ctx.stroke();
+
+    ctx.lineWidth = 4;
+    ctx.fillStyle = "yellow";
+    ctx.beginPath();
+    ctx.moveTo(200, 100);
+    ctx.lineTo(220, 100);
+    ctx.lineTo(220, 120);
+    ctx.lineTo(200, 120);
+    ctx.lineTo(200, 100);
+    ctx.fill();
+    ctx.moveTo(210, 120);
+    ctx.lineTo(210, 140);
+    ctx.lineTo(190, 130);
+    ctx.moveTo(210, 140);
+    ctx.lineTo(230, 130);
+    ctx.moveTo(210, 140);
+    ctx.lineTo(210, 160);
+    ctx.lineTo(190, 180);
+    ctx.moveTo(210, 160);
+    ctx.lineTo(230, 180);
+    ctx.stroke();
+
+    ctx.lineWidth = 1;
+    ctx.fillStyle = "darkGreen";
+    ctx.beginPath();
+    ctx.moveTo(200, 250);
+    ctx.lineTo(200, 290);
+    ctx.lineTo(250, 290);
+    ctx.lineTo(250, 250);
+    ctx.lineTo(225, 225);
+    ctx.lineTo(200, 250);
+    ctx.fill();
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    ctx.arc(300, 300, 20, 0, Math.PI / 2, false);
+    ctx.fill();
+
+    function circle (x, y, radius, fill) {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+        if (fill === "stroke") {
+            ctx.stroke();
+        } else if (fill === "fill") {
+            ctx.fill();
+        };
+    };
+
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "green";
+    circle(350, 450, 40, "stroke");
+    ctx.strokeStyle = "yellow";
+    circle(350, 450, 35, "stroke");
+    ctx.strokeStyle = "blue";
+    circle(350, 450, 30, "stroke");
+    ctx.strokeStyle = "orange";
+    circle(350, 450, 25, "stroke");
+    ctx.strokeStyle = "red";
+    circle(350, 450, 20, "stroke");
+    ctx.strokeStyle = "violet";
+    circle(350, 450, 15, "stroke");
+    ctx.strokeStyle = "deepPink";
+    circle(350, 450, 10, "stroke");
+    ctx.fillStyle = "purple"
+    ctx.beginPath();
+    ctx.arc(350, 450, 5, 0, Math.PI *2, false);
+    ctx.fill();
+
+    ctx.strokeStyle = "black";
+    circle(350, 100, 40, "stroke");
+    circle(350, 200, 60, "stroke");
+    ctx.fillStyle = "black";
+    circle(340, 90, 5, "fill");
+    circle(360, 90, 5, "fill");
+    ctx.fillStyle = "orange";
+    circle(350, 110, 5, "fill");
+    ctx.fillStyle = "violet";
+    circle(350, 170, 5, "fill");
+    ctx.fillStyle = "green";
+    circle(350, 200, 5, "fill");
+    ctx.fillStyle = "darkBlue";
+    circle(350, 230, 5, "fill");
+
+</script>
+</body>
+</html>

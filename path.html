@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Path</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    function draw(array) {
+        ctx.beginPath();
+        ctx.moveTo(array[0] [0], array[0] [1]);
+        for (var i = 1; i < array.length; i++) {
+            ctx.lineTo(array[i] [0], array[i] [1]);
+        }
+        ctx.stroke();
+    };
+
+    var mysteryPoints = [[50, 50], [50, 100], [25, 120], [100, 50], [70, 90], [100, 90], [70, 120]];
+    draw(mysteryPoints);
+
+</script>
+</body>
+</html>
